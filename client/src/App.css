@@ -1,5 +1,13 @@
+#root{background: #00ACEE}
 .App {
   text-align: center;
+  background: url('./images/twitter_bg.png');
+  height: 662px;
+  background-repeat: repeat-y;
+  background-position: center;
+}
+.App > div:first-child{
+  height: 100%;
 }
 
 .App-logo {
