@@ -1,23 +1,12 @@
 import React from 'react';
 import '../css/tweet.css';
-import {getTweets} from '../service/getTweets';
 
-export default class Tweet extends React.Component {
-
-    constructor(props, context) {
-        super(props, context);
-
-        this.state = {
-          data: getTweets(),
-        }
-    }
-
-    render() {
-        const data = this.state.data;
-        return (
-            <div>
+const Tweet = (props) => {
+    return (
+        <div className='container'>
                 {
-                    data.map((tweet) => {
+                    (props.tweets && props.tweets.length) &&
+                    props.tweets.map((tweet) => {
                         return (
                             <div className='tweet-holder' key={tweet.id}>
                                 <img className='picture' src={tweet.user.profile_image_url_https} alt='img'/>
@@ -38,6 +27,7 @@ export default class Tweet extends React.Component {
                     })
                 }
             </div>
-        )
-    }
-};
+    )
+}
+
+export default Tweet;

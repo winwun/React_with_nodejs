@@ -1,0 +1,14 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    align-self: self-start;
+    margin: 20px;
+}
+textarea{
+    border-color: #F1ABB4;
+    box-shadow: 0 0 0 1px #F1ABB4;
+    border-radius: 11px;
+    margin-bottom: 20px;
+    height: 85px;
+    padding: 18px;
+}

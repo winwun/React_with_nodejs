@@ -1,22 +1,20 @@
 import React from 'react';
 import '../css/login.css';
-import { Link } from 'react-router-dom'
 
 export default class Login extends React.Component {
 
     constructor(props, context) {
         super(props, context);
 
-        this.state = {}
+        this.state = {
+            response: ''
+        }
     }
-
 
     render() {
         return (
             <div className='login-form'>
-                <Link to={{ pathname: '/activityFeed' }}>
-                    <button className='submit'>Login to Twitter</button>
-                </Link>
+                <a className='submit' href='http://localhost:4000/login/twitter'>Login to Twitter</a>
             </div>
         )
     }

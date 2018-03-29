@@ -1,18 +1,25 @@
 const express = require('express');
 var passport = require('passport');
 var Strategy = require('passport-twitter').Strategy;
+var request = require('request');
+var Twitter = require('twitter');
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 4000;
+let accessToken,
+    accessTokenSecret,
+    consumerKey = 'u41HKMAiZXitUWXqsItV6qebY',
+    consumerSecret = '22Jx57BvMxVvifYqd3wHfYGlGsgXwkq8ZobH5LaGCbn9VRnUgz';
 
 //Configure Passport
 passport.use(new Strategy({
   consumerKey: 'u41HKMAiZXitUWXqsItV6qebY',
   consumerSecret: '22Jx57BvMxVvifYqd3wHfYGlGsgXwkq8ZobH5LaGCbn9VRnUgz',
-  callbackURL: 'http://localhost:3000/login/twitter/return'
+  callbackURL: 'http://localhost:4000/login/twitter/return'
 },
 function(token, tokenSecret, profile, cb) {
-  console.log('twitter', tokenSecret);
+  accessToken = token;
+  accessTokenSecret = tokenSecret;
   // In this example, the user's Twitter profile is supplied as the user
   // record.  In a production-quality application, the Twitter profile should
   // be associated with a user record in the application's database, which
@@ -20,6 +27,7 @@ function(token, tokenSecret, profile, cb) {
   // providers.
   return cb(null, profile);
 }));
+
 
 // Configure Passport authenticated session persistence.
 //
@@ -75,6 +83,40 @@ app.get('/profile',
     });
   });
 
-  // https://api.twitter.com/1.1/statuses/home_timeline.json
+  app.get('/get/tweets', function(req, res) {
+    var client = new Twitter({
+      consumer_key: consumerKey,
+      consumer_secret: consumerSecret,
+      access_token_key: accessToken,
+      access_token_secret: accessTokenSecret
+    });
+
+    client.get('statuses/home_timeline', function(error, tweets, response) {
+      if (!error) {
+         res.status(200).json({ tweets: tweets });
+      }
+      else {
+        res.status(500).json({ error: error });
+      }
+    });
+  });
+
+  app.get('/post/tweet', function(req, res){
+    var client = new Twitter({
+      consumer_key: consumerKey,
+      consumer_secret: consumerSecret,
+      access_token_key: accessToken,
+      access_token_secret: accessTokenSecret
+    });
+console.log('req', req.params)
+    client.post('statuses/update', {status: req.param}, function(error, tweet, response) {
+      if (!error) {
+         res.status(200).json({ tweet: tweet });
+      }
+      else {
+        res.status(500).json({ error: error });
+      }
+    })
+  });
 
 app.listen(port, () => console.log(`Listening on port ${port}`));

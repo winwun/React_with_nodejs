@@ -1,4 +1,8 @@
 #root{background: #00ACEE}
+body{ 
+  overflow-y: hidden;
+  background: #00ACEE;
+}
 .App {
   text-align: center;
   background: url('./images/twitter_bg.png');
