@@ -1,5 +1,5 @@
 {
-  "name": "sample-react",
+  "name": "reactjs_oauth_with_nodejs",
   "version": "1.0.0",
   "scripts": {
     "client": "cd client && yarn start",

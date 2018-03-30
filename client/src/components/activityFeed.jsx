@@ -10,19 +10,20 @@ export default class activityFeed extends React.Component {
 
         this.state = {
             response:'',
-            tweetDetails: ''
+            tweetDetails: '',
+            loading: true
         }
         this.handleChange = this.handleChange.bind(this);
         this.postTweet = this.postTweet.bind(this);
     }
 
     componentDidMount() {
-        this.callApi()
-          .then(res => this.setState({ response: res.tweets }))
+        this.getTweets()
+          .then(res => this.setState({ response: res.tweets, loading: false }))
           .catch(err => console.log(err));
       }
     
-      callApi = async () => {
+      getTweets = async () => {
         const response = await fetch('/get/tweets');
         const body = await response.json();
         if (response.status !== 200) throw Error(body.message);
@@ -30,9 +31,14 @@ export default class activityFeed extends React.Component {
       };
 
       postTweet() { 
-         fetch('/post/tweet',{
-            params: this.state.tweetDetails
-        })
+         fetch('/post/tweet/?status='+this.state.tweetDetails)
+         .then(res => {
+            this.setState({tweetDetails: ''})
+            this.getTweets().then(res => this.setState({ response: res.tweets, loading: false}))
+          })
+         .catch(err => console.log(err))
+         this.setState({loading: true})
+         
       }
 
       handleChange(event) {
@@ -41,10 +47,14 @@ export default class activityFeed extends React.Component {
       
   
     render() {
+        const { loading } = this.state;
+        if(loading) {  
+            return <div className='loader'></div>; 
+        }
         return (
             <div id='feed'>
                 <ComposeTweet tweetDetails={this.state.tweetDetails} handleChange={this.handleChange} postTweet={this.postTweet}/>
-                <div className='holder'>        
+                <div className='holder'>
                 <Tweet tweets={this.state.response}/>
                 </div>
             </div>

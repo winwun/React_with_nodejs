@@ -1,9 +1,58 @@
 .holder{
-    height: 987px;
+    height: 661px;
     overflow-y: scroll;
     width: 100%;
     margin-right: 2px;
 }
 #feed{
     display: flex;
+}
+.loader:empty {
+    position: absolute;
+    top: calc(50% - 4em);
+    left: calc(50% - 4em);
+    width: 6em;
+    height: 6em;
+    border: 1.1em solid rgba(0, 0, 0, 0.2);
+    border-left: 1.1em solid #000000;
+    border-radius: 50%;
+    animation: load8 1.1s infinite linear;
+  }
+  
+  @keyframes load8 {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+@media (min-width: 320px) {
+    .holder{
+        height: 349px !important;
+    }
+    .details{
+        overflow-x: hidden;
+    }
+}
+@media (min-width: 375px) {
+    .holder{
+        height: 448px !important;
+    }
+}
+@media (min-width: 414px) {
+    .holder{
+        height: 517px !important;
+    }
+}
+@media (min-width: 887px) {
+    .holder{
+        height: 660px !important;
+    }
+}
+@media (max-width: 375px) and (min-height: 812px) {
+    .holder{
+        height: 591px !important;
+    }
 }

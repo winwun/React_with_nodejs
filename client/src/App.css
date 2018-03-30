@@ -38,3 +38,18 @@ body{
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+@media (max-width: 414px) {
+  #feed {
+    display: flex;
+    flex-direction: column;
+  }
+  #feed .container{
+    display: flex;
+    margin: 20px;
+    align-self: auto;
+  }
+  #feed .submit{
+    width:100% !important;
+  }
+}

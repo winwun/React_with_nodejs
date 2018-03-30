@@ -91,7 +91,7 @@ app.get('/profile',
       access_token_secret: accessTokenSecret
     });
 
-    client.get('statuses/home_timeline', function(error, tweets, response) {
+    client.get('statuses/home_timeline', {count: 30}, function(error, tweets, response) {
       if (!error) {
          res.status(200).json({ tweets: tweets });
       }
@@ -101,15 +101,15 @@ app.get('/profile',
     });
   });
 
-  app.get('/post/tweet', function(req, res){
+
+  app.get('/post/tweet/', function(req, res){
     var client = new Twitter({
       consumer_key: consumerKey,
       consumer_secret: consumerSecret,
       access_token_key: accessToken,
       access_token_secret: accessTokenSecret
     });
-console.log('req', req.params)
-    client.post('statuses/update', {status: req.param}, function(error, tweet, response) {
+    client.post('statuses/update', req.query, function(error, tweet, response) {
       if (!error) {
          res.status(200).json({ tweet: tweet });
       }
