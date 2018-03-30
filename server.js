@@ -72,7 +72,7 @@ app.get('/login/twitter/return',
     failureRedirect: '/login'
   }),
   function (req, res) {
-    res.redirect('/');
+    res.redirect('http://localhost:3000/activityFeed');
   });
 
 app.get('/profile',
